@@ -17,7 +17,10 @@ class EmpresaMensajeria:
         self.repartidores = {}
 
     def agregar_repartidor(self):
-        cantidad = int(input("Ingrse la cantidada de repartodores que "))
+        try:
+            cantidad = int(input("Ingrse la cantidada de repartodores que "))
+        except ValueError:
+            print("Ingrese un dato correcto")
         for i in range(cantidad):
             print(f"----------------------")
             print(f"Repartidor {i+1}")
@@ -32,3 +35,11 @@ class EmpresaMensajeria:
                 zona = input("Ingrese la zona trbajada por el repartidor: ")
                 self.repartidores[nombre]= Repartidor(nombre, cantidad_paquetes, zona)
 
+    def quick_sort(self, lista):
+        if len(lista) == 1:
+            return lista
+        pivote = lista[0]
+        menores = [x for x in lista if x.cantidad_paquetes < pivote.catidad_paquetes]
+        iguales = [x for x in lista if x.cantidad_paquetes == pivote.catidad_paquetes ]
+        mayores = [x for x in  lista if x.cantidad_paquetes > pivote.catidad_paquetes]
+        return self.quick_sort(mayores) + iguales + self.quick_sort(menores)
