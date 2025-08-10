@@ -17,6 +17,26 @@ class EmpresaMensajeria:
     def __init__(self):
         self.repartidores = {}
 
+
+    def busqueda_secuecial(self, objetivo):
+        lista = list(self.repartidores.values())
+        for i in range(len(lista)):
+            if lista[i].nombre == objetivo:
+                return i
+        return -1
+
+    def buscar_repartidor(self):
+        if not self.repartidores:
+            print("No hay repartidores registrados")
+            return
+        nombre = input("Igrese el nombre del repartidor")
+        busco = self.busqueda_secuecial(nombre)
+        if busco != -1:
+            print("El repartidor ha sido encontrado :) ")
+            print(nombre)
+        else:
+            print("El repartidor no ha sido encontrado")
+
     def pedir_entero(self, mensaje):
         while True:
             try:
@@ -54,6 +74,19 @@ class EmpresaMensajeria:
         while opcion != 6:
             print("++MENU++")
             print("1. Agregar repartidor")
-            print("2. Ranking de entregas")
+            print("2. Repartidores ordenados por número de entregas")
             print("3. Buscar repartidor por nombre")
+            print("4. Mostrar Ranking de entregas")
+            print("5. Estadisticas")
+            print("6. Salir del programa")
+            opcion = self.pedir_entero("Ingrese la opción que desee: ")
+            match opcion:
+                case 1:
+                    self.agregar_repartidor()
+                case 2:
+                    lista_ordenada = self.quick_sort(list(self.repartidores.values()))
+                    for repartidor in lista_ordenada:
+                        print(repartidor)
+
+
 
