@@ -31,6 +31,35 @@ class EmpresaMensajeria:
             return  0
         return promedio
 
+    def mas_entregas(self):
+        if not self.repartidores:
+            print("No hay repartidores registrados")
+            return []
+        max = -1
+        for j in self.repartidores.values():
+            if j.cantidad_paquetes > max:
+                max = j.cantidad_paquetes
+
+        repartidores_max = []
+        for i in self.repartidores.values():
+            if i.cantidad_paquetes == max:
+                repartidores_max.append(i)
+        return repartidores_max
+
+    def menos_entregas(self):
+        if not self.repartidores.values():
+            print("No hay repartidores registrados")
+            return []
+        min = 15
+        for i in self.repartidores.values():
+            if i.cantidad_paquetes < min:
+                min = i.cantidad_paquetes
+
+        repartidores_min = []
+        for j in self.repartidores.values():
+            if j.cantidad_paquetes == min:
+                repartidores_min.append(j)
+        return repartidores_min
 
     def busqueda_secuecial(self, objetivo):
         lista = list(self.repartidores.values())
@@ -43,11 +72,15 @@ class EmpresaMensajeria:
         if not self.repartidores:
             print("No hay repartidores registrados")
             return
-        nombre = input("Igrese el nombre del repartidor")
-        busco = self.busqueda_secuecial(nombre)
-        if busco != -1:
+        nombre = input("Ingrese el nombre del repartidor: ")
+        encontrado = None
+        for repartidor in self.repartidores.values():
+            if repartidor.nombre == nombre:
+                encontrado = repartidor
+                break
+        if encontrado:
             print("El repartidor ha sido encontrado :) ")
-            print(self.repartidores[nombre])
+            print(encontrado)
         else:
             print("El repartidor no ha sido encontrado")
 
@@ -114,10 +147,30 @@ class EmpresaMensajeria:
                     print("2. Promedio de entregas")
                     print("3. Repartidores con más entregas")
                     print("4. Repartidores con menos emtregas")
+                    print("5. Volver al menú principal")
                     opcion_case5 = self.pedir_entero("Ingrese su opción: ")
                     match opcion_case5:
                         case 1:
-                            self.total_entregas()
+                            total = self.total_entregas()
+                            print(f"El total de entregas es: {total}")
                         case 2:
-                            self.promedio_entregas()
-
+                            promedio = self.promedio_entregas()
+                            print(f"El promedio de entregas es: {promedio}")
+                        case 3:
+                            mas_entregas = self.mas_entregas()
+                            print("Los repartidores con más entregas son:")
+                            for i in mas_entregas:
+                                print(i)
+                        case 4:
+                            menos_entregas = self.menos_entregas()
+                            print("Los repartidores con menos de 15 entregas son: ")
+                            for j in menos_entregas:
+                                print(j)
+                        case 5:
+                            pass
+                        case _:
+                            print("Ingrese un opción válida")
+                case 6:
+                    print("Saliendo del programa... ")
+                case _:
+                    print("Ingrese una opción válida")
